@@ -16,8 +16,6 @@
 
 @property (nonatomic, assign) NSSize size;
 
-+(World *)getWorld;
-
 -(void)reset;
 -(int)maxVanishingPoints;
 -(VanishingPoint *)vanishingPointAtIndex:(int)index;

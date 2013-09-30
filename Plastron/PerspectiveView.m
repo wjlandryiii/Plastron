@@ -19,6 +19,8 @@
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
         mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
+        world = [[World alloc]init];
+        renderer = [[Renderer alloc]init];
     }
     return self;
 }
@@ -29,6 +31,8 @@
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
         mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
+        world = [[World alloc]init];
+        renderer = [[Renderer alloc]init];
     }
     return self;
 }
@@ -39,6 +43,8 @@
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
         mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
+        world = [[World alloc]init];
+        renderer = [[Renderer alloc]init];
     }
     return self;
 }
@@ -69,11 +75,8 @@
     [scale scaleBy:zoomLevel];
     [scale concat];
     
-    World *w = [World getWorld];
-
-    Renderer *r = [[Renderer alloc]init];
     
-    [r renderWorld:w];
+    [renderer renderWorld:world];
 }
 
 // TODO: set anchor points for zooming?
@@ -87,8 +90,7 @@
 }
 
 -(void) increaseDensity{
-    World *w = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
+    VanishingPoint *vp = [world vanishingPointAtIndex:selection];
     
     if(vp != NULL){
         vp.density += 1;
@@ -97,8 +99,7 @@
 }
 
 -(void) decreaseDensity{
-    World *w = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
+    VanishingPoint *vp = [world vanishingPointAtIndex:selection];
     
     if(vp != NULL){
         if(vp.density > 1){
@@ -118,11 +119,10 @@
     p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
     p = [self pointToWorldCoordinates:p];
     
-    World *w = [World getWorld];
     
     // do this backwards becase the higher indexes get drawn last and look like they are on top of the smaller indexes
     for(i = 8; i > -1; i--){
-        vp = [w vanishingPointAtIndex:i];
+        vp = [world vanishingPointAtIndex:i];
         if(vp != NULL){
             if(NSPointInRect(p, [self rectFromPoint:vp.point Radius:40.0f])){
                 NSLog(@"FUCKING HERE %d", i);
@@ -174,8 +174,7 @@
 }
 
 -(void)clearSelection{
-    World *w  = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
+    VanishingPoint *vp = [world vanishingPointAtIndex:selection];
     
     if(vp == NULL)
         return;
@@ -187,8 +186,7 @@
 }
 
 -(void)dropVanishingPoint:(int)index AtPoint:(NSPoint)point{
-    World *w = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:index];
+    VanishingPoint *vp = [world vanishingPointAtIndex:index];
     NSPoint p;
     p = [self convertPoint:point fromView:self.superview];
     p = [self pointToWorldCoordinates:p];
@@ -197,7 +195,7 @@
         vp = [[VanishingPoint alloc]init];
         vp.label = [NSString stringWithFormat:@"%d", index+1];
         vp.density = 4;
-        [w setVanishingPoint:vp WithIndex:index];
+        [world setVanishingPoint:vp WithIndex:index];
     }
 
     selection = index;
@@ -207,12 +205,11 @@
 }
 
 -(void)updateSelection{
-    World *w = [World getWorld];
     int i;
     VanishingPoint *vp;
     
-    for(i = 0; i < w.maxVanishingPoints; i++){
-        vp = [w vanishingPointAtIndex:i];
+    for(i = 0; i < world.maxVanishingPoints; i++){
+        vp = [world vanishingPointAtIndex:i];
         if(vp != NULL){
             vp.selected = i == selection ? YES : NO;
         }

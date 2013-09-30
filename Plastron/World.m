@@ -8,17 +8,9 @@
 
 #import "World.h"
 
-World *w;
-
 @implementation World
 
 @synthesize size = size;
-
-+(World *)getWorld{
-    if(w == NULL)
-        w = [[World alloc]init];
-    return w;
-}
 
 -(id) init{
     self = [super init];

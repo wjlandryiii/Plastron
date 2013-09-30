@@ -13,7 +13,7 @@
 @implementation MouseMode_VanishingPoints
 
 -(void)click:(NSPoint)point Selection:(int) s{
-    World *w = [World getWorld];
+    /*World *w = [World getWorld];
     VanishingPoint *vp = [w vanishingPointAtIndex:s];
     
     clickPoint = point;
@@ -22,10 +22,12 @@
     if(vp != NULL){
         clickDelta = NSMakePoint(vp.point.x - clickPoint.x, vp.point.y - clickPoint.y);
     }
+     */
     
 }
 
 -(void)moved:(NSPoint)point{
+    /*
     World *w = [World getWorld];
     VanishingPoint *vp;
     
@@ -33,6 +35,7 @@
         vp = [w vanishingPointAtIndex:selection];
         vp.point = NSMakePoint(point.x + clickDelta.x, point.y + clickDelta.y);
     }
+     */
 }
 
 -(void)stop:(NSPoint)point{

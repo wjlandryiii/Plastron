@@ -9,8 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 #import "MouseMode_VanishingPoints.h"
+#import "World.h"
+#import "Renderer.h"
 
 @interface PerspectiveView : NSView {
+    World *world;
+    Renderer *renderer;
     CGFloat zoomLevel;
     NSPoint otherMouseDown;
     NSPoint cameraPosition;
