@@ -47,6 +47,8 @@
 -(void)removeLastTraceLine;
 -(void)removeAllTraceLines;
 
+-(void)alignVanishingPoints1_2_HorizontallyAtPoint:(NSPoint)point;
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;
 

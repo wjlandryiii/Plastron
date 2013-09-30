@@ -31,6 +31,9 @@
     
     
     switch(theEvent.keyCode){
+        case 4:
+            if(!shift && !alt && !command && !control) [self.perspectiveView alignVanishingPoints1_2_HorizontallyAtPoint:p];
+            break;
         case 18: // 1
             if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:0 AtPoint:p];
             if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:0];

@@ -341,6 +341,24 @@
     [self removeLastTraceLine];
 }
 
+-(void)alignVanishingPoints1_2_HorizontallyAtPoint:(NSPoint)point{
+    NSPoint p;
+    VanishingPoint *vp1 = [world vanishingPointAtIndex:0];
+    VanishingPoint *vp2 = [world vanishingPointAtIndex:1];
+    
+    p = [self convertPoint:point fromView:self.superview];
+    p = [self pointToWorldCoordinates:p];
+    
+    if(vp1 != NULL){
+        vp1.point = NSMakePoint(vp1.point.x, p.y);
+        [self setNeedsDisplay:YES];
+    }
+    if(vp2 != NULL){
+        vp2.point = NSMakePoint(vp2.point.x, p.y);
+        [self setNeedsDisplay:YES];
+    }
+}
+
 -(void)updateSelection{
     int i;
     VanishingPoint *vp;
