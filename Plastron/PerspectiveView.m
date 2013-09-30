@@ -16,8 +16,8 @@
     if(self){
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
-        //mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
         leftClickDrag = [[MouseDrag alloc]init];
+        middleClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -29,8 +29,8 @@
     if(self){
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
-        //mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
         leftClickDrag = [[MouseDrag alloc]init];
+        middleClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -42,8 +42,8 @@
     if(self){
         zoomLevel = 1.0f;
         cameraPosition = NSMakePoint(0, 0);
-        //mm_vanishingPoints = [[MouseMode_VanishingPoints alloc]init];
         leftClickDrag = [[MouseDrag alloc]init];
+        middleClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -119,9 +119,10 @@
     p = [self pointToWorldCoordinates:p];
     
     index = [self vanishingPointHitTest:p];
-    if(index != selection){
+    if(index != selection && index != -1){
         selection = index;
         [self updateSelection];
+        [self setNeedsDisplay:YES];
     }
     
     vp = [world vanishingPointAtIndex:selection];
@@ -146,23 +147,6 @@
     [self setNeedsDisplay:YES];
 }
 
--(int)vanishingPointHitTest:(NSPoint) worldPoint{
-    VanishingPoint *vp;
-    NSRect vpHitRect;
-    int i;
-    
-    // do this backwards becase the higher indexes get drawn last and look like they are on top of the smaller indexes
-    for(i = world.maxVanishingPoints-1; i >= 0; i--){
-        vp = [world vanishingPointAtIndex:i];
-        if(vp != NULL){
-            vpHitRect = [self rectFromPoint:vp.point Radius:20.0f];
-            if(NSPointInRect(worldPoint, vpHitRect)){
-                return i;
-            }
-        }
-    }
-    return -1; // did not click a vanishing point
-}
 
 
 
@@ -171,15 +155,19 @@
 }
 
 -(void)otherMouseDown:(NSEvent *)theEvent{
-    NSLog(@"Middle mouse down: %@", theEvent);
-    oldCameraPosition = cameraPosition;
-    otherMouseDown = theEvent.locationInWindow;
+    NSPoint p;
+    p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
+    
+    [middleClickDrag startAtPoint:p WithOrigin:cameraPosition];
 }
 
 -(void)otherMouseDragged:(NSEvent *)theEvent{
+    NSPoint p;
+    p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
 
-    cameraPosition.x = oldCameraPosition.x + theEvent.locationInWindow.x - otherMouseDown.x;
-    cameraPosition.y = oldCameraPosition.y + theEvent.locationInWindow.y - otherMouseDown.y;
+    [middleClickDrag update:p];
+    
+    cameraPosition = middleClickDrag.resultantOrigin;
     
     [self setNeedsDisplay:YES];
 }
@@ -234,5 +222,24 @@
         }
     }
 }
+
+-(int)vanishingPointHitTest:(NSPoint) worldPoint{
+    VanishingPoint *vp;
+    NSRect vpHitRect;
+    int i;
+    
+    // do this backwards becase the higher indexes get drawn last and look like they are on top of the smaller indexes
+    for(i = world.maxVanishingPoints-1; i >= 0; i--){
+        vp = [world vanishingPointAtIndex:i];
+        if(vp != NULL){
+            vpHitRect = [self rectFromPoint:vp.point Radius:20.0f];
+            if(NSPointInRect(worldPoint, vpHitRect)){
+                return i;
+            }
+        }
+    }
+    return -1; // did not click a vanishing point
+}
+
 
 @end

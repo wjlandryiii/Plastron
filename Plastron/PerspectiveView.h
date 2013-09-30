@@ -20,6 +20,7 @@
     NSPoint cameraPosition;
     NSPoint oldCameraPosition;
     MouseDrag *leftClickDrag;
+    MouseDrag *middleClickDrag;
     int selection;
 }
 
