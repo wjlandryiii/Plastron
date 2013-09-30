@@ -12,9 +12,15 @@
 @interface World : NSObject {
     VanishingPoint *vanishingPoints[9];
     NSSize size;
+    NSInteger gridSpacing;
+    BOOL showHorizontalGrid;
+    BOOL showVerticalGrid;
 }
 
 @property (nonatomic, assign) NSSize size;
+@property (nonatomic, assign) NSInteger gridSpacing;
+@property (nonatomic, assign) BOOL showHorizontalGrid;
+@property (nonatomic, assign) BOOL showVerticalGrid;
 
 -(void)reset;
 -(int)maxVanishingPoints;

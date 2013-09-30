@@ -25,7 +25,6 @@
     Line *line1;
     Line *line2;
     Line *line3;
-    
 }
 
 -(void) zoomIn;
@@ -42,6 +41,11 @@
 
 -(void)dropVanishingPoint:(int)index AtPoint:(NSPoint)point;
 -(void)dropVanishingPointAtIntersection:(int)index;
+-(void)selectVanishingPoint:(int)index;
+-(void)removeVanishingPoint:(int)index;
+
+-(void)removeLastTraceLine;
+-(void)removeAllTraceLines;
 
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;

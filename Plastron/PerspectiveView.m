@@ -52,7 +52,7 @@
     }
     return self;
 }
-
+/*
 - (BOOL)canBecomeKeyWindow
 {
     return YES;
@@ -62,6 +62,7 @@
 {
     return YES;
 }
+ */
 
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -307,6 +308,37 @@
             }
         }
     }
+}
+
+-(void)selectVanishingPoint:(int)index {
+    selection = index;
+    [self updateSelection];
+    [self setNeedsDisplay:TRUE];
+}
+
+-(void)removeVanishingPoint:(int)index{
+    [world setVanishingPoint:NULL WithIndex:index];
+    [self setNeedsDisplay:TRUE];
+}
+
+-(void)removeLastTraceLine{
+    if(line3 != NULL){
+        [line3 release];
+        line3 = NULL;
+        [self setNeedsDisplay:YES];
+        return;
+    }
+    if(line2 != NULL){
+        [line2 release];
+        line2 = NULL;
+        [self setNeedsDisplay:YES];
+        return;
+    }
+}
+
+-(void)removeAllTraceLines{
+    [self removeLastTraceLine];
+    [self removeLastTraceLine];
 }
 
 -(void)updateSelection{

@@ -10,7 +10,10 @@
 
 @implementation World
 
-@synthesize size = size;
+@synthesize size;
+@synthesize gridSpacing;
+@synthesize showHorizontalGrid;
+@synthesize showVerticalGrid;
 
 -(id) init{
     self = [super init];

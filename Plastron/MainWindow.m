@@ -21,99 +21,91 @@
 }
 
 - (void)keyDown:(NSEvent *)theEvent{
-    NSPoint p;
+    NSPoint p = [self mouseLocationOutsideOfEventStream];
+    BOOL shift = (theEvent.modifierFlags & NSShiftKeyMask) == NSShiftKeyMask;
+    BOOL alt = (theEvent.modifierFlags & NSAlternateKeyMask) == NSAlternateKeyMask;
+    BOOL command = (theEvent.modifierFlags & NSCommandKeyMask) == NSCommandKeyMask;
+    BOOL control = (theEvent.modifierFlags & NSControlKeyMask) == NSControlKeyMask;
     
     NSLog(@"%@", theEvent);
-    if(theEvent.modifierFlags == 0x40101){
-        if([theEvent.charactersIgnoringModifiers isEqualToString:@"="]){
-            NSLog(@"ZOOM IN");
-            [self.perspectiveView zoomIn];
-        }
-        if([theEvent.charactersIgnoringModifiers isEqualToString:@"-"]){
-            NSLog(@"Zoom out");
-            [self.perspectiveView zoomOut];
-        }
+    
+    
+    switch(theEvent.keyCode){
+        case 18: // 1
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:0 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:0];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:0];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:0];
+            break;
+        case 19: // 2
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:1 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:1];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:1];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:1];
+            break;
+        case 20: // 3
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:2 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:2];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:2];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:2];
+            break;
+        case 21: // 4
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:3 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:3];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:3];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:3];
+            break;
+        case 23: // 5
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:4 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:4];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:4];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:4];
+            break;
+        case 22: // 6
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:5 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:5];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:5];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:5];
+            break;
+        case 26: // 7
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:6 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:6];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:6];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:6];
+            break;
+        case 28: // 8
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:7 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:7];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:7];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:7];
+            break;
+        case 25: // 9
+            if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:8 AtPoint:p];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:8];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeVanishingPoint:8];
+            if( shift && !alt && !command &&  control) [self.perspectiveView dropVanishingPointAtIntersection:8];
+            break;
+        case 123: // LEFT
+            break;
+        case 124: // RIGHT
+            break;
+        case 125: // DOWN
+            [self.perspectiveView decreaseDensity];
+            break;
+        case 126: // UP
+            [self.perspectiveView increaseDensity];
+            break;
+        case 27: // -
+            if(!shift && !alt && !command &&  control) [self.perspectiveView zoomOut];
+            break;
+        case 24: // =
+            if(!shift && !alt && !command &&  control) [self.perspectiveView zoomIn];
+            break;
+        case 51: // Backspace
+            if(!shift && !alt && !command && !control) [self.perspectiveView removeLastTraceLine];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView removeAllTraceLines];
+            break;
     }
-    if(theEvent.keyCode == 53){
-        [self.perspectiveView clearSelection];
-    }
-    if([theEvent.characters isEqualToString:@"1"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:0 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"2"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:1 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"3"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:2 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"4"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:3 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"5"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:4 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"6"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:5 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"7"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:6 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"8"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:7 AtPoint:p];
-    }
-    if([theEvent.characters isEqualToString:@"9"]){
-        p = [self mouseLocationOutsideOfEventStream];
-        [self.perspectiveView dropVanishingPoint:8 AtPoint:p];
-    }
-    if(theEvent.keyCode == 126){ //UP
-        [self.perspectiveView increaseDensity];
-    }
-    if(theEvent.keyCode == 125){ //DOWN
-        [self.perspectiveView decreaseDensity];
-    }
-    if(theEvent.keyCode == 123){ //LEFT
-        
-    }
-    if(theEvent.keyCode == 124){ //RIGHT
-        
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"!"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:0];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"@"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:1];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"#"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:2];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"$"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:3];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"%"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:4];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"^"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:5];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"&"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:6];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"*"] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:7];
-    }
-    if([theEvent.charactersIgnoringModifiers isEqualToString:@"("] && theEvent.modifierFlags == 0x60103){
-        [self.perspectiveView dropVanishingPointAtIntersection:8];
-    }
-
-
 }
 
 - (BOOL)canBecomeKeyWindow
