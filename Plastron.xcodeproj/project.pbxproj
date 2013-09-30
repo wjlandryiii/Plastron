@@ -17,8 +17,8 @@
 		67F3FB9017F7D563006DCC2A /* World.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB8F17F7D563006DCC2A /* World.m */; };
 		67F3FB9317F7E05C006DCC2A /* VanishingPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9217F7E05C006DCC2A /* VanishingPoint.m */; };
 		67F3FB9617F8D13D006DCC2A /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9517F8D13D006DCC2A /* MainWindow.m */; };
-		67F3FB9917F8F78F006DCC2A /* MouseMode_VanishingPoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9817F8F78F006DCC2A /* MouseMode_VanishingPoints.m */; };
 		67F3FB9C17F913D3006DCC2A /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9B17F913D3006DCC2A /* Renderer.m */; };
+		67F3FB9F17F924F2006DCC2A /* MouseDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9E17F924F2006DCC2A /* MouseDrag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,10 +43,10 @@
 		67F3FB9217F7E05C006DCC2A /* VanishingPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VanishingPoint.m; sourceTree = "<group>"; };
 		67F3FB9417F8D13D006DCC2A /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindow.h; sourceTree = "<group>"; };
 		67F3FB9517F8D13D006DCC2A /* MainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindow.m; sourceTree = "<group>"; };
-		67F3FB9717F8F78F006DCC2A /* MouseMode_VanishingPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseMode_VanishingPoints.h; sourceTree = "<group>"; };
-		67F3FB9817F8F78F006DCC2A /* MouseMode_VanishingPoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseMode_VanishingPoints.m; sourceTree = "<group>"; };
 		67F3FB9A17F913D3006DCC2A /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		67F3FB9B17F913D3006DCC2A /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		67F3FB9D17F924F2006DCC2A /* MouseDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseDrag.h; sourceTree = "<group>"; };
+		67F3FB9E17F924F2006DCC2A /* MouseDrag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseDrag.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +112,10 @@
 				67F3FB8F17F7D563006DCC2A /* World.m */,
 				67F3FB9117F7E05C006DCC2A /* VanishingPoint.h */,
 				67F3FB9217F7E05C006DCC2A /* VanishingPoint.m */,
-				67F3FB9717F8F78F006DCC2A /* MouseMode_VanishingPoints.h */,
-				67F3FB9817F8F78F006DCC2A /* MouseMode_VanishingPoints.m */,
 				67F3FB9A17F913D3006DCC2A /* Renderer.h */,
 				67F3FB9B17F913D3006DCC2A /* Renderer.m */,
+				67F3FB9D17F924F2006DCC2A /* MouseDrag.h */,
+				67F3FB9E17F924F2006DCC2A /* MouseDrag.m */,
 			);
 			path = Plastron;
 			sourceTree = "<group>";
@@ -202,8 +202,8 @@
 				67F3FB9017F7D563006DCC2A /* World.m in Sources */,
 				67F3FB9317F7E05C006DCC2A /* VanishingPoint.m in Sources */,
 				67F3FB9617F8D13D006DCC2A /* MainWindow.m in Sources */,
-				67F3FB9917F8F78F006DCC2A /* MouseMode_VanishingPoints.m in Sources */,
 				67F3FB9C17F913D3006DCC2A /* Renderer.m in Sources */,
+				67F3FB9F17F924F2006DCC2A /* MouseDrag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

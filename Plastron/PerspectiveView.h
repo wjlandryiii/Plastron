@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "MouseMode_VanishingPoints.h"
+#import "MouseDrag.h"
 #import "World.h"
 #import "Renderer.h"
 
@@ -19,7 +19,7 @@
     NSPoint otherMouseDown;
     NSPoint cameraPosition;
     NSPoint oldCameraPosition;
-    MouseMode_VanishingPoints *mm_vanishingPoints;
+    MouseDrag *leftClickDrag;
     int selection;
 }
 
@@ -37,6 +37,7 @@
 
 -(void)dropVanishingPoint:(int)index AtPoint:(NSPoint)point;
 
+-(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;
 
 @end
