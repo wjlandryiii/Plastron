@@ -16,6 +16,7 @@
     NSPoint cameraPosition;
     NSPoint oldCameraPosition;
     MouseMode_VanishingPoints *mm_vanishingPoints;
+    int selection;
 }
 
 -(void) zoomIn;
@@ -31,5 +32,7 @@
 -(void)clearSelection;
 
 -(void)dropVanishingPoint:(int)index AtPoint:(NSPoint)point;
+
+-(void)updateSelection;
 
 @end

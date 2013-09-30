@@ -11,11 +11,16 @@
 @interface VanishingPoint : NSObject {
     NSPoint point;
     NSInteger density;
+    BOOL selected;
+    NSString *label;
+    NSColor *color;
 }
 
 @property (nonatomic, assign) NSPoint point;
+//TODO set density to unsigned?
 @property (nonatomic, assign) NSInteger density;
-
--(void) Draw:(NSInteger) index Selected:(BOOL) selected;
+@property (nonatomic, assign) BOOL selected;
+@property (nonatomic, retain) NSString *label;
+@property (nonatomic, retain) NSColor *color;
 
 @end

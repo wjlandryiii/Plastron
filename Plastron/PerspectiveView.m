@@ -9,6 +9,7 @@
 #import "PerspectiveView.h"
 #import "World.h"
 #import "VanishingPoint.h"
+#import "Renderer.h"
 
 @implementation PerspectiveView
 
@@ -62,21 +63,17 @@
     NSAffineTransform *scale = [NSAffineTransform transform];
     NSAffineTransform *translate = [NSAffineTransform transform];
     
+    [translate translateXBy:cameraPosition.x yBy:cameraPosition.y];
+    [translate concat];
+
     [scale scaleBy:zoomLevel];
     [scale concat];
     
-    [translate translateXBy:cameraPosition.x yBy:cameraPosition.y];
-    [translate concat];
-    
-
-    
-    [[NSColor whiteColor] set];
-    
-    NSRectFill(NSMakeRect(0, 0, 640, 480));
-    
-    
     World *w = [World getWorld];
-    [w Draw];
+
+    Renderer *r = [[Renderer alloc]init];
+    
+    [r renderWorld:w];
 }
 
 // TODO: set anchor points for zooming?
@@ -91,7 +88,7 @@
 
 -(void) increaseDensity{
     World *w = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:w.selection];
+    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
     
     if(vp != NULL){
         vp.density += 1;
@@ -101,7 +98,7 @@
 
 -(void) decreaseDensity{
     World *w = [World getWorld];
-    VanishingPoint *vp = [w vanishingPointAtIndex:w.selection];
+    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
     
     if(vp != NULL){
         if(vp.density > 1){
@@ -129,14 +126,15 @@
         if(vp != NULL){
             if(NSPointInRect(p, [self rectFromPoint:vp.point Radius:40.0f])){
                 NSLog(@"FUCKING HERE %d", i);
-                [w setSelection:i];
+                selection = i;
+                [self updateSelection];
                 [self setNeedsDisplay:YES];
                 break;
             }
         }
     }
 
-    [mm_vanishingPoints click:p Selection:w.selection];
+    [mm_vanishingPoints click:p Selection:selection];
     [self setNeedsDisplay:YES];
 }
 
@@ -177,8 +175,14 @@
 
 -(void)clearSelection{
     World *w  = [World getWorld];
+    VanishingPoint *vp = [w vanishingPointAtIndex:selection];
     
-    [w setSelection:-1];
+    if(vp == NULL)
+        return;
+    
+    vp.selected = FALSE;
+    selection = -1;
+
     [self setNeedsDisplay:YES];
 }
 
@@ -191,13 +195,28 @@
     
     if(vp == NULL){
         vp = [[VanishingPoint alloc]init];
-
+        vp.label = [NSString stringWithFormat:@"%d", index+1];
         vp.density = 4;
         [w setVanishingPoint:vp WithIndex:index];
     }
-    [w setSelection:index];
+
+    selection = index;
+    [self updateSelection];
     vp.point = p;
     [self setNeedsDisplay:YES];
+}
+
+-(void)updateSelection{
+    World *w = [World getWorld];
+    int i;
+    VanishingPoint *vp;
+    
+    for(i = 0; i < w.maxVanishingPoints; i++){
+        vp = [w vanishingPointAtIndex:i];
+        if(vp != NULL){
+            vp.selected = i == selection ? YES : NO;
+        }
+    }
 }
 
 @end
