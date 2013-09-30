@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Plastron' target in the 'Plastron' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
