@@ -11,17 +11,21 @@
 #import "MouseDrag.h"
 #import "World.h"
 #import "Renderer.h"
+#import "Line.h"
 
 @interface PerspectiveView : NSView {
     World *world;
     Renderer *renderer;
     CGFloat zoomLevel;
-    NSPoint otherMouseDown;
     NSPoint cameraPosition;
-    NSPoint oldCameraPosition;
     MouseDrag *leftClickDrag;
     MouseDrag *middleClickDrag;
+    MouseDrag *rightClickDrag;
     int selection;
+    Line *line1;
+    Line *line2;
+    Line *line3;
+    
 }
 
 -(void) zoomIn;
@@ -37,6 +41,7 @@
 -(void)clearSelection;
 
 -(void)dropVanishingPoint:(int)index AtPoint:(NSPoint)point;
+-(void)dropVanishingPointAtIntersection:(int)index;
 
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;

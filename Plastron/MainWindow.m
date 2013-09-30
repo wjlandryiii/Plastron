@@ -85,6 +85,34 @@
     if(theEvent.keyCode == 124){ //RIGHT
         
     }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"!"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:0];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"@"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:1];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"#"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:2];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"$"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:3];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"%"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:4];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"^"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:5];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"&"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:6];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"*"] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:7];
+    }
+    if([theEvent.charactersIgnoringModifiers isEqualToString:@"("] && theEvent.modifierFlags == 0x60103){
+        [self.perspectiveView dropVanishingPointAtIntersection:8];
+    }
+
 
 }
 

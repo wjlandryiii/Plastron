@@ -19,6 +19,7 @@
 		67F3FB9617F8D13D006DCC2A /* MainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9517F8D13D006DCC2A /* MainWindow.m */; };
 		67F3FB9C17F913D3006DCC2A /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9B17F913D3006DCC2A /* Renderer.m */; };
 		67F3FB9F17F924F2006DCC2A /* MouseDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB9E17F924F2006DCC2A /* MouseDrag.m */; };
+		67F3FBA217F934B2006DCC2A /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FBA117F934B2006DCC2A /* Line.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		67F3FB9B17F913D3006DCC2A /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
 		67F3FB9D17F924F2006DCC2A /* MouseDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseDrag.h; sourceTree = "<group>"; };
 		67F3FB9E17F924F2006DCC2A /* MouseDrag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseDrag.m; sourceTree = "<group>"; };
+		67F3FBA017F934B2006DCC2A /* Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Line.h; sourceTree = "<group>"; };
+		67F3FBA117F934B2006DCC2A /* Line.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Line.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 				67F3FB8F17F7D563006DCC2A /* World.m */,
 				67F3FB9117F7E05C006DCC2A /* VanishingPoint.h */,
 				67F3FB9217F7E05C006DCC2A /* VanishingPoint.m */,
+				67F3FBA017F934B2006DCC2A /* Line.h */,
+				67F3FBA117F934B2006DCC2A /* Line.m */,
 				67F3FB9A17F913D3006DCC2A /* Renderer.h */,
 				67F3FB9B17F913D3006DCC2A /* Renderer.m */,
 				67F3FB9D17F924F2006DCC2A /* MouseDrag.h */,
@@ -204,6 +209,7 @@
 				67F3FB9617F8D13D006DCC2A /* MainWindow.m in Sources */,
 				67F3FB9C17F913D3006DCC2A /* Renderer.m in Sources */,
 				67F3FB9F17F924F2006DCC2A /* MouseDrag.m in Sources */,
+				67F3FBA217F934B2006DCC2A /* Line.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

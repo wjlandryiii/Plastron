@@ -18,6 +18,7 @@
         cameraPosition = NSMakePoint(0, 0);
         leftClickDrag = [[MouseDrag alloc]init];
         middleClickDrag = [[MouseDrag alloc]init];
+        rightClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -31,6 +32,7 @@
         cameraPosition = NSMakePoint(0, 0);
         leftClickDrag = [[MouseDrag alloc]init];
         middleClickDrag = [[MouseDrag alloc]init];
+        rightClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -44,6 +46,7 @@
         cameraPosition = NSMakePoint(0, 0);
         leftClickDrag = [[MouseDrag alloc]init];
         middleClickDrag = [[MouseDrag alloc]init];
+        rightClickDrag = [[MouseDrag alloc]init];
         world = [[World alloc]init];
         renderer = [[Renderer alloc]init];
     }
@@ -62,7 +65,7 @@
 
 
 - (void)drawRect:(NSRect)dirtyRect {
-    
+    NSPoint n;
 	[[NSColor darkGrayColor] set];
 	NSRectFill(self.bounds);
     
@@ -78,6 +81,36 @@
     
     
     [renderer renderWorld:world];
+    if(line1 != NULL){
+        NSBezierPath* thePath = [NSBezierPath bezierPath];
+        [[NSColor blueColor] setStroke];
+        [thePath moveToPoint:line1.p1];
+        [thePath lineToPoint:line1.p2];
+        [thePath stroke];
+    }
+    if(line2 != NULL){
+        NSBezierPath* thePath = [NSBezierPath bezierPath];
+        [[NSColor redColor] setStroke];
+        [thePath moveToPoint:line2.p1];
+        [thePath lineToPoint:line2.p2];
+        [thePath stroke];
+    }
+    if(line3 != NULL){
+        NSBezierPath* thePath = [NSBezierPath bezierPath];
+        [[NSColor redColor] setStroke];
+        [thePath moveToPoint:line3.p1];
+        [thePath lineToPoint:line3.p2];
+        [thePath stroke];
+    }
+    
+    if(line2 != NULL && line3 != NULL){
+        if([line2 doesIntersectionExist:line3]){
+            n = [line2 intersection:line3];
+            [[NSColor greenColor] setFill];
+            NSRectFill([self rectFromPoint:n Radius:10.0f]);
+            NSLog(@"Intercept: X: %f Y: %f", n.x, n.y);
+        }
+    }
 }
 
 // TODO: set anchor points for zooming?
@@ -151,7 +184,45 @@
 
 
 -(void)rightMouseDown:(NSEvent *)theEvent{
-    NSLog(@"Right mouse down: %@", theEvent);
+    NSPoint p;
+    p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
+    p = [self pointToWorldCoordinates:p];
+    
+    [rightClickDrag startAtPoint:p WithOrigin:NSMakePoint(0.0f, 0.0f)];
+}
+
+-(void)rightMouseDragged:(NSEvent *)theEvent{
+    NSPoint p;
+    p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
+    p = [self pointToWorldCoordinates:p];
+    
+    [rightClickDrag update:p];
+    
+    if(line1 == NULL){
+        line1 = [[Line alloc]init];
+        line1.p1 = rightClickDrag.startPoint;
+    }
+    line1.p2 = rightClickDrag.stopPoint;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)rightMouseUp:(NSEvent *)theEvent{
+    NSPoint p;
+    p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
+    p = [self pointToWorldCoordinates:p];
+    
+    [rightClickDrag update:p];
+    
+    if(line2 == NULL){
+        line2 = line1;
+    } else if(line3 == NULL){
+        line3 = line1;
+    } else {
+        [line3 release];
+        line3 = line1;
+    }
+    line1= NULL;
+    [self setNeedsDisplay:YES];
 }
 
 -(void)otherMouseDown:(NSEvent *)theEvent{
@@ -209,6 +280,33 @@
     [self updateSelection];
     vp.point = p;
     [self setNeedsDisplay:YES];
+}
+
+-(void)dropVanishingPointAtIntersection:(int)index{
+    NSPoint intersection;
+    VanishingPoint *vp = [world vanishingPointAtIndex:index];
+    
+    if(line2 != NULL && line3 != NULL){
+        if([line2 doesIntersectionExist:line3]){
+            intersection = [line2 intersection:line3];
+            if(fabs(intersection.x) < 50000.0f && fabs(intersection.y) < 50000.0f){
+                if(vp == NULL){
+                    vp = [[VanishingPoint alloc]init];
+                    vp.label = [NSString stringWithFormat:@"%d", index+1];
+                    vp.density = 4;
+                    [world setVanishingPoint:vp WithIndex:index];
+                }
+                selection = index;
+                [self updateSelection];
+                vp.point = intersection;
+                [line2 release];
+                [line3 release];
+                line2 = NULL;
+                line3 = NULL;
+                [self setNeedsDisplay:YES];
+            }
+        }
+    }
 }
 
 -(void)updateSelection{
