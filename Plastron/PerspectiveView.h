@@ -49,6 +49,8 @@
 
 -(void)alignVanishingPoints1_2_HorizontallyAtPoint:(NSPoint)point;
 
+-(void)copyToPasteboard;
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;
 

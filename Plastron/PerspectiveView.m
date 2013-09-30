@@ -371,6 +371,33 @@
     }
 }
 
+-(void)copyToPasteboard{
+    //TODO review this code
+    NSPasteboard *pb = [NSPasteboard generalPasteboard];
+    NSBitmapImageRep *rep;
+    
+    [pb declareTypes:[NSArray arrayWithObjects:NSPasteboardTypePNG,nil] owner:self];
+    
+    rep = [[[NSBitmapImageRep alloc]
+                                       initWithBitmapDataPlanes:NULL
+                                       pixelsWide:world.size.width
+                                       pixelsHigh:world.size.height
+                                       bitsPerSample:8
+                                       samplesPerPixel:4
+                                       hasAlpha:YES
+                                       isPlanar:NO
+                                       colorSpaceName:NSDeviceRGBColorSpace
+                                       bitmapFormat:NSAlphaFirstBitmapFormat
+                                       bytesPerRow:0
+                                       bitsPerPixel:0] autorelease];
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+
+    [renderer renderWorld:world];
+    [NSGraphicsContext restoreGraphicsState];
+    [pb setData:[rep representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
+}
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint{
     VanishingPoint *vp;
     NSRect vpHitRect;
