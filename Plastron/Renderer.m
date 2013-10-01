@@ -17,6 +17,11 @@
     [[NSColor whiteColor] set];
     NSRectFill(NSMakeRect(0.0f, 0.0f, world.size.width, world.size.height));
     
+    if(world.showHorizontalGrid)
+        [self DrawHLinesSize:world.size Spacing:world.gridSpacing];
+    if(world.showVerticalGrid)
+        [self DrawVLinesSize:world.size Spacing:world.gridSpacing];
+    
     for(i = 0; i < world.maxVanishingPoints; i++){
         [self renderVanishingPoint:[world vanishingPointAtIndex:i]];
     }
@@ -24,15 +29,12 @@
 }
 
 -(void)renderVanishingPoint:(VanishingPoint *)vanishingPoint{
+    int i;
+    CGFloat step = 360.0/4.0/(CGFloat)vanishingPoint.density;
+
+    
     if(vanishingPoint == NULL)
         return;
-    
-    //World *world = [World getWorld];
-    
-    
-    int i;
-    
-    CGFloat step = 360.0/4.0/(CGFloat)vanishingPoint.density;
     
     for(i = 0; i < vanishingPoint.density; i++){
         NSAffineTransform *t = [NSAffineTransform transform];
@@ -49,10 +51,25 @@
     } else {
         [self DrawCircleCenter:vanishingPoint.point Radius:20.0f Stroke:[NSColor blackColor] Fill:[NSColor darkGrayColor]];
     }
-    //NSString *label = [NSString stringWithFormat:@"%ld", (long)index];
-    //[world DrawText:label inRect:NSMakeRect(self.point.x - 20.0f, self.point.y - 20.0f, self.point.x+20.0f, self.point.y+20.0f)];
+
     [self DrawText:vanishingPoint.label AtPoint:vanishingPoint.point];
     
+}
+
+-(void) DrawHLinesSize:(NSSize)size Spacing:(NSInteger) spacing{
+    NSInteger i;
+    
+    for(i = spacing; i < size.height; i += spacing){
+        [self DrawLineStart:NSMakePoint(0, i) Stop:NSMakePoint(size.width, i) Stroke:[NSColor greenColor]];
+    }
+}
+
+-(void) DrawVLinesSize:(NSSize)size Spacing:(NSInteger) spacing{
+    NSInteger i;
+    
+    for(i = spacing; i < size.width; i += spacing){
+        [self DrawLineStart:NSMakePoint(i, 0) Stop:NSMakePoint(i, size.height) Stroke:[NSColor greenColor]];
+    }
 }
 
 -(void) DrawCircleCenter:(NSPoint) center Radius:(CGFloat) radius Stroke:(NSColor *)stroke Fill:(NSColor *)fill{
@@ -83,6 +100,5 @@
     NSDictionary *attr = [[NSDictionary alloc] initWithObjectsAndKeys: [NSFont boldSystemFontOfSize:16.0], NSFontAttributeName, [NSColor whiteColor], NSForegroundColorAttributeName, nil];
     [text drawAtPoint:point withAttributes:attr];
 }
-
 
 @end

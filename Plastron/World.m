@@ -19,6 +19,7 @@
     self = [super init];
     if(self){
         self.size = NSMakeSize(640.0f, 480.0f);
+        gridSpacing = 20;
     }
     return self;
 }

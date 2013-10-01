@@ -34,8 +34,13 @@
         case 4: // H
             if(!shift && !alt && !command && !control) [self.perspectiveView alignVanishingPoints1_2_HorizontallyAtPoint:p];
             break;
+        case 5: //G
+            if(!shift && !alt && !command && !control) [self.perspectiveView toggleGrid];
+            if(!shift && !alt && !command &&  control) [self.perspectiveView cycleGridType];
+            break;
         case 8: // C
             if(!shift && !alt && !command &&  control) [self.perspectiveView copyToPasteboard];
+            break;
         case 18: // 1
             if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:0 AtPoint:p];
             if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:0];
@@ -102,9 +107,11 @@
             break;
         case 27: // -
             if(!shift && !alt && !command &&  control) [self.perspectiveView zoomOut];
+            if(!shift && !alt && !command && !control) [self.perspectiveView decreaseGridSize];
             break;
         case 24: // =
             if(!shift && !alt && !command &&  control) [self.perspectiveView zoomIn];
+            if(!shift && !alt && !command && !control) [self.perspectiveView increaseGridSize];
             break;
         case 51: // Backspace
             if(!shift && !alt && !command && !control) [self.perspectiveView removeLastTraceLine];

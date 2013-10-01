@@ -398,6 +398,54 @@
     [pb setData:[rep representationUsingType:NSPNGFileType properties:nil] forType:NSPasteboardTypePNG];
 }
 
+-(void)showGrid{
+    world.showHorizontalGrid = YES;
+    world.showVerticalGrid = YES;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)hideGrid{
+    world.showHorizontalGrid = NO;
+    world.showVerticalGrid = NO;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)toggleGrid{
+    if(world.showVerticalGrid || world.showHorizontalGrid)
+        [self hideGrid];
+    else
+        [self showGrid];
+}
+
+-(void)increaseGridSize{
+    world.gridSpacing += 5;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)decreaseGridSize{
+    world.gridSpacing -= 5;
+    if(world.gridSpacing <= 0)
+        world.gridSpacing = 5;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)cycleGridType{
+    if(world.showVerticalGrid && world.showHorizontalGrid){
+        world.showVerticalGrid = YES;
+        world.showHorizontalGrid = NO;
+    } else if(world.showVerticalGrid && !world.showHorizontalGrid){
+        world.showVerticalGrid = NO;
+        world.showHorizontalGrid = YES;
+    } else if(!world.showVerticalGrid && world.showHorizontalGrid){
+        world.showVerticalGrid = NO;
+        world.showHorizontalGrid = NO;
+    } else if(!world.showVerticalGrid && !world.showHorizontalGrid){
+        world.showVerticalGrid = YES;
+        world.showHorizontalGrid = YES;
+    }
+    [self setNeedsDisplay:YES];
+}
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint{
     VanishingPoint *vp;
     NSRect vpHitRect;

@@ -51,6 +51,14 @@
 
 -(void)copyToPasteboard;
 
+-(void)showGrid;
+-(void)hideGrid;
+-(void)toggleGrid;
+-(void)cycleGridType;
+
+-(void)increaseGridSize;
+-(void)decreaseGridSize;
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;
 
