@@ -14,6 +14,7 @@
 @property (assign) IBOutlet NSWindow *sizeSheetWindow;
 @property (assign) IBOutlet NSTextField *sizeSheetHeight;
 @property (assign) IBOutlet NSTextField *sizeSheetWidth;
+-(void) pasteImage;
 -(void) showSizeSheet;
 -(void) showOpenImageDialog;
 - (IBAction)pushedSizeSheetOK:(id)sender;

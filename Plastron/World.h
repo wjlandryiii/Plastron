@@ -22,7 +22,7 @@
 @property (nonatomic, assign) NSInteger gridSpacing;
 @property (nonatomic, assign) BOOL showHorizontalGrid;
 @property (nonatomic, assign) BOOL showVerticalGrid;
-@property (nonatomic, assign) NSImage *backgroundImage;
+@property (nonatomic, retain) NSImage *backgroundImage;
 
 -(void)reset;
 -(int)maxVanishingPoints;

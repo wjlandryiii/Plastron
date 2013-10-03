@@ -41,6 +41,9 @@
         case 8: // C
             if(!shift && !alt && !command &&  control) [self.perspectiveView copyToPasteboard];
             break;
+        case 9: // V
+            if(!shift && !alt && !command &&  control) [self pasteImage];
+            break;
         case 15: // R
             if(!shift && !alt && !command &&  control) [self.perspectiveView reset];
             break;
@@ -145,6 +148,16 @@
 - (BOOL)canBecomeMainWindow
 {
     return YES;
+}
+
+-(void) pasteImage{
+    NSPasteboard *pb = [NSPasteboard generalPasteboard];
+    NSArray *imgs =  [pb readObjectsForClasses:@[[NSImage class]] options:nil];
+    NSImage *img = [imgs lastObject];
+
+    if(img != nil){
+        [self.perspectiveView setBackgroundImage:img];
+    }
 }
 
 -(void) showSizeSheet{

@@ -29,7 +29,6 @@
     
     if(self.renderBackground){
         if(world.backgroundImage){
-            NSLog(@"Drawing image");
             [world.backgroundImage drawInRect:NSMakeRect(0, 0, world.size.width, world.size.height) fromRect:NSMakeRect(0, 0, world.size.width, world.size.height) operation:NSCompositeCopy fraction:1.0f];
         }
     }

@@ -34,17 +34,6 @@
     }
     return self;
 }
-/*
-- (BOOL)canBecomeKeyWindow
-{
-    return YES;
-}
-
-- (BOOL)canBecomeMainWindow
-{
-    return YES;
-}
- */
 
 
 - (void)drawRect:(NSRect)dirtyRect {
