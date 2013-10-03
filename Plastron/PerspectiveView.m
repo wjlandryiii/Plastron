@@ -83,6 +83,124 @@
             NSLog(@"Intercept: X: %f Y: %f", n.x, n.y);
         }
     }
+    
+    [scale invert];
+    [scale concat];
+    [translate invert];
+    [translate concat];
+    [self drawHud];
+}
+
+-(void)drawHudHeader {
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(0, self.bounds.size.height - 40.0f, self.bounds.size.width, 40.0f)];
+    [[NSColor colorWithCalibratedRed:0.1f green:0.1f blue:0.1f alpha:0.75f] setFill];
+    [path fill];
+    [[NSColor blackColor] setStroke];
+    [path stroke];
+    
+    NSString *zoomString = [NSString stringWithFormat:@"Zoom : %0.0f %%", zoomLevel * 100];
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:kCTTextAlignmentRight];
+    
+    [zoomString drawInRect:NSMakeRect(0.0f, self.bounds.size.height - 40.0f, self.bounds.size.width, 40.0f) withAttributes:@{NSForegroundColorAttributeName: [NSColor whiteColor], NSFontAttributeName: [NSFont fontWithName:@"Helvetica" size:20.0f], NSParagraphStyleAttributeName: style}];
+    
+    NSString *dropIntersection = @"Press [CTRL]+[SHIFT]+(1-9) to drop a vanishing point at intersection";
+    if(line2 != NULL && line3 != NULL){
+        if([line2 doesIntersectionExist:line3]){
+            [dropIntersection drawInRect:NSMakeRect(0.0f, self.bounds.size.height - 40.0f, self.bounds.size.width, 40.0f) withAttributes:@{NSForegroundColorAttributeName: [NSColor redColor], NSFontAttributeName: [NSFont fontWithName:@"Helvetica" size:20.0f]}];
+        }
+    }
+}
+
+-(void)drawHudFooter {
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, self.bounds.size.width, 40.0f)];
+    [[NSColor colorWithCalibratedRed:0.1f green:0.1f blue:0.1f alpha:0.75f] setFill];
+    [path fill];
+    [[NSColor blackColor] setStroke];
+    [path stroke];
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:kCTTextAlignmentCenter];
+    
+    NSString *selectionString;
+    VanishingPoint *vp = [world vanishingPointAtIndex:selection];
+    
+    if(selection != -1){
+        selectionString = [NSString stringWithFormat:@"Vanishing Point %d >> Density : %ld", selection+1, (long)vp.density];
+    } else {
+        selectionString = @"No Selection";
+    }
+    
+    [selectionString drawInRect:NSMakeRect(0, 0, self.bounds.size.width, 40.0f) withAttributes:@{NSForegroundColorAttributeName: [NSColor whiteColor], NSFontAttributeName: [NSFont fontWithName:@"Helvetica" size:20.0f], NSParagraphStyleAttributeName: style}];
+}
+
+-(void)drawHudHelp {
+    NSBezierPath *path = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0f, 40.0f, 350.0f, self.bounds.size.height - 80.0f)];
+    [[NSColor colorWithCalibratedRed:0.1f green:0.1f blue:0.1f alpha:0.75f] setFill];
+    [path fill];
+    [[NSColor blackColor] setStroke];
+    [path stroke];
+    
+    NSArray *help_strings = @[
+                              @"Left_Click + Drag", @"Drag selection",
+                              @"Middle_Click + Drag", @"Pan Camera",
+                              @"Mouse_Wheel", @"--Zoom camera",
+                              @"CTRL+ +/-", @"Zoom in/out",
+                              @"",@"",
+                              @"Escape", @"Unselect all",
+                              @"Home", @"Reset camera",
+                              @"", @"",
+                              @"CTRL+R", @"Reset document",
+                              @"CTRL+N", @"Resize document",
+                              @"(1-9)", @"Drop vanishing point at mouse location",
+                              @"CTRL + (1-9)", @"Select vanishing point",
+                              @"ALT + (1-9)", @"Remove a vanishing point",
+                              @"", @"",
+                              @"Right_Click + Drag", @"Create a trace line (2 max)",
+                              @"\t+ CTRL", @"--Snap to 5 degree increments",
+                              @"\t+ SHIFT", @"--Snap to 15 degree increments",
+                              @"Backspace", @"Delete last trace line",
+                              @"Alt + Backspace", @"Delete all trace lines",
+                              @"", @"",
+                              @"CTRL + I", @"Load a background image",
+                              @"I", @"Toggle background image",
+                              @"ALT + I", @"Remove background image",
+                              @"", @"",
+                              @"CTRL + C", @"Copy grid to clipboard",
+                              @"\t+ SHIFT", @"--Copy grid in grayscale",
+                              @"CTRL + V", @"Paste background image from pasteboard",
+                              @"", @"",
+                              @"S", @"--Shuffle colors",
+                              @"H", @"Align vanishing points 1 and 2 horizontally",
+                              @"", @"",
+                              @"CTRL + Cursor_Key", @"--Flip points to other side of axis",
+                              @"Cursor Up/Down", @"Change line density (-- 0 = automatic)",
+                              @"", @"",
+                              @"G", @"Toggle grid",
+                              @"CTRL + G", @"Cycle grid style",
+                              @"+/-", @"Change grid size"
+                              ];
+    
+    NSMutableParagraphStyle *rightStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [rightStyle setAlignment:kCTTextAlignmentRight];
+
+    NSRect r = NSMakeRect(10.0f, self.bounds.size.height-80.0f, 300.0f, 15.0f);
+    
+    for(int i = 0; i < help_strings.count-1; i+=2){
+        NSString *leftString = [help_strings objectAtIndex:i];
+        NSString *rightString = [help_strings objectAtIndex:i+1];
+        
+        [leftString drawInRect:r withAttributes:@{NSForegroundColorAttributeName: [NSColor yellowColor]}];
+        
+        [rightString drawInRect:r withAttributes:@{NSForegroundColorAttributeName: [NSColor whiteColor], NSParagraphStyleAttributeName: rightStyle}];
+        r.origin.y -= r.size.height;
+    }
+}
+
+-(void)drawHud {
+    [self drawHudFooter];
+    [self drawHudHelp];
+    [self drawHudHeader];
 }
 
 // TODO: set anchor points for zooming?
@@ -151,8 +269,6 @@
     
     [self setNeedsDisplay:YES];
 }
-
-
 
 
 -(void)rightMouseDown:(NSEvent *)theEvent{

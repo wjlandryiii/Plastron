@@ -27,6 +27,8 @@
     Line *line3;
 }
 
+-(void)drawHud;
+
 -(void) zoomIn;
 -(void) zoomOut;
 
