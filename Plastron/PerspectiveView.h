@@ -59,6 +59,18 @@
 -(void)increaseGridSize;
 -(void)decreaseGridSize;
 
+-(void)resizeWorld:(NSSize) size;
+-(NSSize)currentWorldSize;
+
+-(void)setBackgroundImage:(NSImage *)image;
+
+-(void)toggleBackground;
+-(void)showBackground;
+-(void)hideBackground;
+
+-(void)resetCamera;
+-(void)reset;
+
 -(int)vanishingPointHitTest:(NSPoint) worldPoint;
 -(void)updateSelection;
 

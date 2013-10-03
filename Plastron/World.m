@@ -14,6 +14,7 @@
 @synthesize gridSpacing;
 @synthesize showHorizontalGrid;
 @synthesize showVerticalGrid;
+@synthesize backgroundImage;
 
 -(id) init{
     self = [super init];

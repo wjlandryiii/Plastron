@@ -10,7 +10,11 @@
 #import "World.h"
 #import "VanishingPoint.h"
 
-@interface Renderer : NSObject
+@interface Renderer : NSObject {
+    BOOL renderBackground;
+}
+
+@property (nonatomic, assign) BOOL renderBackground;
 
 -(void)renderWorld:(World *)world;
 -(void)renderVanishingPoint:(VanishingPoint *)vanishingPoint;

@@ -15,12 +15,14 @@
     NSInteger gridSpacing;
     BOOL showHorizontalGrid;
     BOOL showVerticalGrid;
+    NSImage *backgroundImage;
 }
 
 @property (nonatomic, assign) NSSize size;
 @property (nonatomic, assign) NSInteger gridSpacing;
 @property (nonatomic, assign) BOOL showHorizontalGrid;
 @property (nonatomic, assign) BOOL showVerticalGrid;
+@property (nonatomic, assign) NSImage *backgroundImage;
 
 -(void)reset;
 -(int)maxVanishingPoints;

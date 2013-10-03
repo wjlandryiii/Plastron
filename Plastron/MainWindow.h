@@ -11,5 +11,12 @@
 
 @interface MainWindow : NSWindow
 @property (assign) IBOutlet PerspectiveView *perspectiveView;
+@property (assign) IBOutlet NSWindow *sizeSheetWindow;
+@property (assign) IBOutlet NSTextField *sizeSheetHeight;
+@property (assign) IBOutlet NSTextField *sizeSheetWidth;
+-(void) showSizeSheet;
+-(void) showOpenImageDialog;
+- (IBAction)pushedSizeSheetOK:(id)sender;
+- (IBAction)pushedSizeSheetCancel:(id)sender;
 
 @end

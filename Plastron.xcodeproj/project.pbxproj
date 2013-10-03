@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6790310517FA4C150087A8EE /* SizeSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6790310417FA4C150087A8EE /* SizeSheet.xib */; };
 		67F3FB6C17F7CA66006DCC2A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F3FB6B17F7CA66006DCC2A /* Cocoa.framework */; };
 		67F3FB7617F7CA66006DCC2A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67F3FB7417F7CA66006DCC2A /* InfoPlist.strings */; };
 		67F3FB7817F7CA66006DCC2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67F3FB7717F7CA66006DCC2A /* main.m */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6790310417FA4C150087A8EE /* SizeSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SizeSheet.xib; sourceTree = "<group>"; };
 		67F3FB6817F7CA66006DCC2A /* Plastron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plastron.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67F3FB6B17F7CA66006DCC2A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		67F3FB6E17F7CA66006DCC2A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -121,6 +123,7 @@
 				67F3FB9B17F913D3006DCC2A /* Renderer.m */,
 				67F3FB9D17F924F2006DCC2A /* MouseDrag.h */,
 				67F3FB9E17F924F2006DCC2A /* MouseDrag.m */,
+				6790310417FA4C150087A8EE /* SizeSheet.xib */,
 			);
 			path = Plastron;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				67F3FB7617F7CA66006DCC2A /* InfoPlist.strings in Resources */,
 				67F3FB7C17F7CA66006DCC2A /* Credits.rtf in Resources */,
 				67F3FB8217F7CA66006DCC2A /* MainMenu.xib in Resources */,
+				6790310517FA4C150087A8EE /* SizeSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

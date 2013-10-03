@@ -41,6 +41,17 @@
         case 8: // C
             if(!shift && !alt && !command &&  control) [self.perspectiveView copyToPasteboard];
             break;
+        case 15: // R
+            if(!shift && !alt && !command &&  control) [self.perspectiveView reset];
+            break;
+        case 34: // I
+            if(!shift && !alt && !command &&  control) [self showOpenImageDialog];
+            if(!shift && !alt && !command && !control) [self.perspectiveView toggleBackground];
+            if(!shift &&  alt && !command && !control) [self.perspectiveView setBackgroundImage:nil];
+            break;
+        case 45: // N
+            if(!shift && !alt && !command &&  control) [self showSizeSheet];
+            break;
         case 18: // 1
             if(!shift && !alt && !command && !control) [self.perspectiveView dropVanishingPoint:0 AtPoint:p];
             if(!shift && !alt && !command &&  control) [self.perspectiveView selectVanishingPoint:0];
@@ -117,6 +128,12 @@
             if(!shift && !alt && !command && !control) [self.perspectiveView removeLastTraceLine];
             if(!shift &&  alt && !command && !control) [self.perspectiveView removeAllTraceLines];
             break;
+        case 53: // Escape
+            if(!shift && !alt && !command && !control) [self.perspectiveView clearSelection];
+            break;
+        case 115: // Home
+            if(!shift && !alt && !command && !control) [self.perspectiveView resetCamera];
+            break;
     }
 }
 
@@ -130,6 +147,52 @@
     return YES;
 }
 
+-(void) showSizeSheet{
+    NSSize s;
+    
+    if(!self.sizeSheetWindow)
+        [[NSBundle mainBundle] loadNibNamed:@"SizeSheet" owner:self topLevelObjects:nil];
+    
+    [NSApp beginSheet:self.sizeSheetWindow modalForWindow:self modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
+    s = [self.perspectiveView currentWorldSize];
+    [self.sizeSheetHeight setIntValue:s.height];
+    [self.sizeSheetWidth setIntValue:s.width];
+}
 
+-(void) showOpenImageDialog{
+    NSOpenPanel *openPanel = [[NSOpenPanel alloc]init];
 
+    
+    [openPanel beginSheetModalForWindow:self completionHandler:^(NSInteger result){
+            NSImage *img;
+        NSLog(@"FUCK");
+        NSLog(@"%@", [openPanel.URL path]);
+        if(result == NSFileHandlingPanelOKButton){
+            img = [[NSImage alloc]initWithContentsOfFile:[openPanel.URL path]];
+            if(img != nil){
+                NSLog(@"image was not nil");
+                [self.perspectiveView setBackgroundImage:img];
+            }
+        }
+    }];
+}
+
+- (IBAction)pushedSizeSheetOK:(id)sender {
+    NSSize size;
+    size.height = [self.sizeSheetHeight intValue];
+    size.width = [self.sizeSheetWidth intValue];
+    [self.perspectiveView resizeWorld:size];
+    [NSApp endSheet:self.sizeSheetWindow];
+    NSLog(@"size.height: %f", size.height);
+}
+
+- (IBAction)pushedSizeSheetCancel:(id)sender {
+    [NSApp endSheet:self.sizeSheetWindow];
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+    self.sizeSheetWindow = nil;
+    [sheet orderOut:self];
+}
 @end

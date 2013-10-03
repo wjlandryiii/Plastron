@@ -14,13 +14,7 @@
 -(id)init{
     self = [super init];
     if(self){
-        zoomLevel = 1.0f;
-        cameraPosition = NSMakePoint(0, 0);
-        leftClickDrag = [[MouseDrag alloc]init];
-        middleClickDrag = [[MouseDrag alloc]init];
-        rightClickDrag = [[MouseDrag alloc]init];
-        world = [[World alloc]init];
-        renderer = [[Renderer alloc]init];
+        [self reset];
     }
     return self;
 }
@@ -28,13 +22,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if(self){
-        zoomLevel = 1.0f;
-        cameraPosition = NSMakePoint(0, 0);
-        leftClickDrag = [[MouseDrag alloc]init];
-        middleClickDrag = [[MouseDrag alloc]init];
-        rightClickDrag = [[MouseDrag alloc]init];
-        world = [[World alloc]init];
-        renderer = [[Renderer alloc]init];
+        [self reset];
     }
     return self;
 }
@@ -42,13 +30,7 @@
 -(id)initWithFrame:(NSRect)frameRect{
     self = [super initWithFrame:frameRect];
     if(self){
-        zoomLevel = 1.0f;
-        cameraPosition = NSMakePoint(0, 0);
-        leftClickDrag = [[MouseDrag alloc]init];
-        middleClickDrag = [[MouseDrag alloc]init];
-        rightClickDrag = [[MouseDrag alloc]init];
-        world = [[World alloc]init];
-        renderer = [[Renderer alloc]init];
+        [self reset];
     }
     return self;
 }
@@ -426,6 +408,87 @@
     world.gridSpacing -= 5;
     if(world.gridSpacing <= 0)
         world.gridSpacing = 5;
+    [self setNeedsDisplay:YES];
+}
+
+-(NSSize)currentWorldSize{
+    return world.size;
+}
+
+-(void)resizeWorld:(NSSize) size{
+    world.size = size;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)setBackgroundImage:(NSImage *)image{
+    world.backgroundImage = image;
+    if(image == nil){
+        world.size = NSMakeSize(640.0f, 480.0f);
+        [self hideBackground];
+    } else {
+        world.size = image.size;
+        [self showBackground];
+    }
+    [self setNeedsDisplay:YES];
+}
+
+-(void)toggleBackground{
+    if(renderer.renderBackground){
+        [self hideBackground];
+    } else {
+        [self showBackground];
+    }
+}
+
+-(void)showBackground{
+    if(!renderer.renderBackground){
+        renderer.renderBackground = YES;
+        [self setNeedsDisplay:YES];
+    }
+}
+
+-(void)hideBackground{
+    if(renderer.renderBackground){
+        renderer.renderBackground = NO;
+        [self setNeedsDisplay:YES];
+    }
+}
+
+-(void)resetCamera{
+    cameraPosition = NSMakePoint(0.0f, 0.0f);
+    zoomLevel = 1.0f;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)reset{
+    [world release];
+    [renderer release];
+    [leftClickDrag release];
+    [middleClickDrag release];
+    [rightClickDrag release];
+    
+    leftClickDrag = [[MouseDrag alloc]init];
+    middleClickDrag = [[MouseDrag alloc]init];
+    rightClickDrag = [[MouseDrag alloc]init];
+    world = [[World alloc]init];
+    renderer = [[Renderer alloc]init];
+    
+    selection = -1;
+
+    if(line1 != NULL){
+        [line1 release];
+        line1 = NULL;
+    }
+    if(line2 != NULL){
+        [line2 release];
+        line2 = NULL;
+    }
+    if(line3 != NULL){
+        [line3 release];
+        line3 = NULL;
+    }
+    
+    [self resetCamera];
     [self setNeedsDisplay:YES];
 }
 

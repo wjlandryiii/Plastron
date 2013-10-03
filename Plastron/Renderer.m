@@ -11,11 +11,28 @@
 
 @implementation Renderer
 
+@synthesize renderBackground;
+
+-(id)init{
+    self = [super init];
+    if(self){
+        self.renderBackground = YES;
+    }
+    return self;
+}
+
 -(void)renderWorld:(World *)world{
     int i;
     
     [[NSColor whiteColor] set];
     NSRectFill(NSMakeRect(0.0f, 0.0f, world.size.width, world.size.height));
+    
+    if(self.renderBackground){
+        if(world.backgroundImage){
+            NSLog(@"Drawing image");
+            [world.backgroundImage drawInRect:NSMakeRect(0, 0, world.size.width, world.size.height) fromRect:NSMakeRect(0, 0, world.size.width, world.size.height) operation:NSCompositeCopy fraction:1.0f];
+        }
+    }
     
     if(world.showHorizontalGrid)
         [self DrawHLinesSize:world.size Spacing:world.gridSpacing];
@@ -25,14 +42,12 @@
     for(i = 0; i < world.maxVanishingPoints; i++){
         [self renderVanishingPoint:[world vanishingPointAtIndex:i]];
     }
-    
 }
 
 -(void)renderVanishingPoint:(VanishingPoint *)vanishingPoint{
     int i;
     CGFloat step = 360.0/4.0/(CGFloat)vanishingPoint.density;
 
-    
     if(vanishingPoint == NULL)
         return;
     
