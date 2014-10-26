@@ -238,6 +238,8 @@
     VanishingPoint *vp;
     int index;
     
+    NSLog(@"mouseDown: %@", theEvent);
+    
     p = [self convertPoint:theEvent.locationInWindow fromView:self.superview];
     p = [self pointToWorldCoordinates:p];
     
@@ -631,6 +633,7 @@
     }
     return -1; // did not click a vanishing point
 }
+
 
 
 @end
